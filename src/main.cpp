@@ -28,20 +28,19 @@ int points = 0;
 int misses = 0;
 
 
-void blink_pattern(int &prev);
+void blink_pattern(int *prev);
 void blink_pointPattern();
-void blink_random(int &prev);
+void blink_random(int *prev);
 void LEDoff();
-void point(int &points);
-void missed(int &misses);
-void click_detected(int &prev, int &points, int &misses);
-void win(int &cycle, int &randomLED, int &prev, int &points, int &misses);
+void setLED(int led);
+void click_detected(int *prev, int *points, int *misses);
+void win(int *cycle, int *randomLED, int *prev, int *points, int *misses);
 void easyClear();
 void printPointsAndMisses(int points, int misses);
 
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(56700);
   // Init
   lcd.init();
   lcd.backlight();
@@ -63,7 +62,7 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("BEFORE IFS");
+  //Serial.println("BEFORE IFS");
   // Check per 20ms
   if (cycle % 2   == 0) {
     if (digitalRead(BUTTONPIN) == HIGH){
@@ -79,11 +78,11 @@ void loop() {
   if (cycle % 20  == 0) {
     if (points >= 8){
       Serial.println("LED UPDATE");
-      blink_random(prev);
+      blink_random(&prev);
     }
 
     else{
-      blink_pattern(prev);
+      blink_pattern(&prev);
     }
   }
 
@@ -106,51 +105,19 @@ void loop() {
 
 
 
-void blink_pattern(int &prev)
+void blink_pattern(int *prev)
 {
-  int next = ++prev;
 
+  LEDoff();
 
-  if (next > 5) {
-    next = 1;
+  setLED(*prev);
+
+  *prev += 1;
+
+  if (*prev > 5) {
+    *prev = 1;
   }
-
-  switch (next)
-  {
-  case 1:
-    digitalWrite(LEDPIN1, LOW);
-    digitalWrite(LEDPIN2, HIGH);
-    prev = 1;
-    break;
-
-  case 2:
-    digitalWrite(LEDPIN2, LOW);
-    digitalWrite(LEDPIN3, HIGH);
-    prev = 2;
-    break;
-
-  case 3:
-    digitalWrite(LEDPIN3, LOW);
-    digitalWrite(LEDPIN4, HIGH);
-    prev = 3;
-    break;
-
-  case 4:
-    digitalWrite(LEDPIN4, LOW);
-    digitalWrite(LEDPIN5, HIGH);
-    prev = 4;
-    break;
-
-  case 5:
-    digitalWrite(LEDPIN5, LOW);
-    digitalWrite(LEDPIN1, HIGH);
-    prev = 5;
-    break;
-
-
-  default:
-    break;
-  }
+  
 }
 
 
@@ -177,55 +144,20 @@ void blink_pointPattern()
 
 
 
-void blink_random(int &prev)
+void blink_random(int *prev)
 {
   int randLED = random(1, 6);
 
-  while (randLED == prev)
+  do
   {
     randLED = random(1, 6);
   }
+  while (randLED == *prev);
 
+  *prev = randLED;
 
-  digitalWrite(LEDPIN1, LOW);
-  digitalWrite(LEDPIN2, LOW);
-  digitalWrite(LEDPIN3, LOW);
-  digitalWrite(LEDPIN4, LOW);
-  digitalWrite(LEDPIN5, LOW);
-
-
-  switch (randLED)
-  {
-  case 1:
-    digitalWrite(LEDPIN1, HIGH);
-    prev = 1;
-    break;
-
-
-  case 2:
-    digitalWrite(LEDPIN2, HIGH);
-    prev = 2;
-    break;
-
-  case 3:
-    digitalWrite(LEDPIN3, HIGH);
-    prev = 3;
-    break;
-
-  case 4:
-    digitalWrite(LEDPIN4, HIGH);
-    prev = 4;
-    break;
-
-  case 5:
-    digitalWrite(LEDPIN5, HIGH);
-    prev = 5;
-    break;
-
-
-  default:
-    break;
-  }
+  LEDoff();
+  setLED(*prev);
 
 }
 
@@ -240,34 +172,40 @@ void LEDoff()
     digitalWrite(LEDPIN5, LOW);
 }
 
-
-void point(int &points)
+void setLED(int led)
 {
-  points++;
+  switch (led)
+  {
+  case 1: digitalWrite(LEDPIN1, HIGH);  break;
 
+  case 2: digitalWrite(LEDPIN2, HIGH);  break;
+
+  case 3: digitalWrite(LEDPIN3, HIGH);  break;
+
+  case 4: digitalWrite(LEDPIN4, HIGH);  break;
+
+  case 5: digitalWrite(LEDPIN5, HIGH);  break;
+
+  default:                              break;
+  }
 }
 
-void missed(int &misses)
+
+
+
+void click_detected(int *prev, int *points, int *misses)
 {
-  misses++;
-
-}
-
-void click_detected(int &prev, int &points, int &misses)
-{
-
-    if (prev == 3) {
+  if (*prev == 3) {
     blink_pointPattern();
-    point(points);
-    // PRINT POINTS TO DISPLAY HERE FUNCTION
+    *points += 1;
   }
 
   else {
     LEDoff();
-    missed(misses);
+    *misses += 1;
     delay(1000);
-    // PRINT MISSED TO DISPLAY HERE
   }
+  printPointsAndMisses(*points, *misses);
 }
 
 void win(int &cycle, int &randomLED, int &prev, int &points, int &misses)
