@@ -22,8 +22,7 @@ LiquidCrystal_I2C lcd(0x27, 20, 4); // lcd address is 0x27, 16x2 lcd
 
 
 int cycle = 0;
-int randomLED = 0;
-int prev = 0;
+int prev = 1;
 int points = 0;
 int misses = 0;
 
@@ -34,7 +33,7 @@ void blink_random(int *prev);
 void LEDoff();
 void setLED(int led);
 void click_detected(int *prev, int *points, int *misses);
-void win(int *cycle, int *randomLED, int *prev, int *points, int *misses);
+void win(int *cycle, int *prev, int *points, int *misses);
 void easyClear();
 void printPointsAndMisses(int points, int misses);
 
@@ -62,40 +61,39 @@ void setup() {
 }
 
 void loop() {
-  //Serial.println("BEFORE IFS");
   // Check per 20ms
-  if (cycle % 2   == 0) {
-    if (digitalRead(BUTTONPIN) == HIGH){
-      click_detected(prev, points, misses);
-    }
+  if (digitalRead(BUTTONPIN) == HIGH){
+
+    click_detected(&prev, &points, &misses);
+    Serial.println("-");
     if (points == 10){
-      win(cycle, randomLED, prev, points, misses);
+      win(&cycle, &prev, &points, &misses);
+      }
     }
-  }
+  
 
 
   // LED Updated every 200ms
-  if (cycle % 20  == 0) {
+  if (cycle >= 10) {
+    cycle = 0;
     if (points >= 8){
-      Serial.println("LED UPDATE");
+      Serial.println("*");
       blink_random(&prev);
     }
 
     else{
       blink_pattern(&prev);
+      Serial.println(".");
     }
   }
 
 
-  // Every 5th second
-  if (cycle % 100 == 0) {
-    Serial.println("Stats");
-    printPointsAndMisses(points, misses);
 
-  }
 
   cycle++;
   Serial.println(cycle);
+  // 20 milisecond delay for button detection
+  delay(20);
 
 }
 
@@ -208,7 +206,7 @@ void click_detected(int *prev, int *points, int *misses)
   printPointsAndMisses(*points, *misses);
 }
 
-void win(int &cycle, int &randomLED, int &prev, int &points, int &misses)
+void win(int *cycle, int *prev, int *points, int *misses)
 {
 
   easyClear();
@@ -216,24 +214,25 @@ void win(int &cycle, int &randomLED, int &prev, int &points, int &misses)
   lcd.print("Congratulations!");
   lcd.setCursor(0, 1);
   lcd.print("    YOU WON!    ");
+  
   delay(FIVESECONDS);
 
   easyClear();
+  printPointsAndMisses(*points, *misses);
 
-  while (digitalRead(BUTTONPIN) == LOW)
-  {
-    printPointsAndMisses(points, misses);
+  delay(FIVESECONDS);
 
-    delay(FIVESECONDS);
+  easyClear();
+  lcd.print("Press the button");
+  lcd.setCursor(0, 1);
+  lcd.print(" To Play  Again ");
 
-    easyClear();
-
-    lcd.print("Press the button");
-    lcd.setCursor(0, 1);
-    lcd.print(" To Play  Again ");
-  }
-
-
+  while (digitalRead(BUTTONPIN) == LOW) {};
+  easyClear();
+  *cycle = 0;
+  *prev = 1;
+  *points = 0;
+  *misses = 0;
 }
 
 void easyClear()
