@@ -40,7 +40,7 @@ void printPointsAndMisses(int points, int misses);
 
 void setup() {
   Serial.begin(56700);
-  // Init
+  
   lcd.init();
   lcd.backlight();
   lcd.setCursor(ROW, COLUMN);
@@ -54,6 +54,8 @@ void setup() {
   pinMode(BUTTONPIN, INPUT);
 
   randomSeed(analogRead(A0));
+
+  printPointsAndMisses(points, misses);
 
 
 
@@ -102,7 +104,11 @@ void loop() {
 
 
 
-
+/**
+ * @brief Blinks the LED's from left to right
+ * 
+ * @param prev Stores the previously lit LED
+ */
 void blink_pattern(int *prev)
 {
 
@@ -120,7 +126,10 @@ void blink_pattern(int *prev)
 
 
 
-
+/**
+ * @brief Lights the LED's in a pattern, when a point is scored
+ * 
+ */
 void blink_pointPattern()
 {
   for (int i = 0; i < 3; i++)
@@ -141,7 +150,11 @@ void blink_pointPattern()
 
 
 
-
+/**
+ * @brief Blinks in a random pattern. The same LED cannot be chonen twice
+ * 
+ * @param prev  Previously lit LED
+ */
 void blink_random(int *prev)
 {
   int randLED = random(1, 6);
@@ -160,7 +173,10 @@ void blink_random(int *prev)
 }
 
 
-
+/**
+ * @brief Turns off all 5 LED's
+ * 
+ */
 void LEDoff()
 {
     digitalWrite(LEDPIN1, LOW);
@@ -170,6 +186,12 @@ void LEDoff()
     digitalWrite(LEDPIN5, LOW);
 }
 
+
+/**
+ * @brief Used to light up the correct LED
+ * 
+ * @param led LED to be lit up
+ */
 void setLED(int led)
 {
   switch (led)
@@ -190,7 +212,15 @@ void setLED(int led)
 
 
 
-
+/**
+ * @brief If a click is detected, a check will be run to verify if the 3rd LED was lit at the moment.
+ * If the 3rd LED was lit, a point is added and the blink_patternPoints(), wil animate a point scored.
+ * If the 3rd LED was not lit, the misses counter will be incremented, and the LED's will turn off for 1 second.
+ * 
+ * @param prev    Previously lit LED (which here is the current one)
+ * @param points  Point counter
+ * @param misses  Misses counter
+ */
 void click_detected(int *prev, int *points, int *misses)
 {
   if (*prev == 3) {
@@ -206,6 +236,16 @@ void click_detected(int *prev, int *points, int *misses)
   printPointsAndMisses(*points, *misses);
 }
 
+
+/**
+ * @brief Winning message displayed then the points scored and total misses are displayed
+ * 
+ * 
+ * @param cycle   Amount of time the loop function has lopped (resets at 10)
+ * @param prev    Previously lit LED
+ * @param points  Total Points
+ * @param misses  Total Misses
+ */
 void win(int *cycle, int *prev, int *points, int *misses)
 {
 
@@ -235,6 +275,12 @@ void win(int *cycle, int *prev, int *points, int *misses)
   *misses = 0;
 }
 
+
+
+/**
+ * @brief Clears everything currently displayed 16 x 2 (by printing spaces)
+ * 
+ */
 void easyClear()
 {
   // clears everything on the display
@@ -247,6 +293,12 @@ void easyClear()
 }
 
 
+/**
+ * @brief Prints the current points and misses
+ * 
+ * @param points Points Scored
+ * @param misses Misses "Scored"
+ */
 void printPointsAndMisses(int points, int misses)
 {
   lcd.setCursor(0, 0);
