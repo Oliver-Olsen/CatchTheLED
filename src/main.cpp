@@ -1,8 +1,18 @@
+/**
+ * @file main.cpp
+ * @author Oliver Olsen (oliver@skou-olsen.dk)
+ * @brief 
+ * @version 0.1
+ * @date 2025-01-10
+ * 
+ * @copyright Copyright (c) 2025
+ * 
+ */
+
 //Oliver Olsen s205443
 //Nils Wulff   s223968
 
-// 12b
-// 12c
+// 12b It is correct with the following code.
 
 #include <Arduino.h>
 #include <Wire.h>
@@ -40,7 +50,7 @@ void printPointsAndMisses(int points, int misses);
 
 void setup() {
   Serial.begin(56700);
-  
+
   lcd.init();
   lcd.backlight();
   lcd.setCursor(ROW, COLUMN);
@@ -57,10 +67,9 @@ void setup() {
 
   printPointsAndMisses(points, misses);
 
-
-
-
 }
+
+
 
 void loop() {
   // Check per 20ms
@@ -75,7 +84,7 @@ void loop() {
   
 
 
-  // LED Updated every 200ms
+  // LED Updated every 200ms. This happens once every 10'th cycle of the loop
   if (cycle >= 10) {
     cycle = 0;
     if (points >= 8){
@@ -92,7 +101,7 @@ void loop() {
 
 
 
-  cycle++;
+  cycle++; // Used to detemine when the LED's light up in patterns
   Serial.println(cycle);
   // 20 milisecond delay for button detection
   delay(20);
@@ -118,6 +127,7 @@ void blink_pattern(int *prev)
 
   *prev += 1;
 
+  // Resets the LED to the first 1 when the 5th LED has been lit
   if (*prev > 5) {
     *prev = 1;
   }
@@ -159,6 +169,7 @@ void blink_random(int *prev)
 {
   int randLED = random(1, 6);
 
+  // Prevents the same LED form being lit up twice in a row
   do
   {
     randLED = random(1, 6);
@@ -248,7 +259,7 @@ void click_detected(int *prev, int *points, int *misses)
  */
 void win(int *cycle, int *prev, int *points, int *misses)
 {
-
+  // Winning messages
   easyClear();
 
   lcd.print("Congratulations!");
@@ -266,7 +277,8 @@ void win(int *cycle, int *prev, int *points, int *misses)
   lcd.print("Press the button");
   lcd.setCursor(0, 1);
   lcd.print(" To Play  Again ");
-
+  
+  // Waits for the button to be pressed. When pressed the whole game resets
   while (digitalRead(BUTTONPIN) == LOW) {};
   easyClear();
   *cycle = 0;

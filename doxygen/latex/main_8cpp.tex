@@ -1,0 +1,203 @@
+\doxysection{C\+:/\+Users/olive/\+Dropbox/\+Catch\+The\+LED/src/main.cpp File Reference}
+\hypertarget{main_8cpp}{}\label{main_8cpp}\index{C:/Users/olive/Dropbox/CatchTheLED/src/main.cpp@{C:/Users/olive/Dropbox/CatchTheLED/src/main.cpp}}
+{\ttfamily \#include $<$Arduino.\+h$>$}\newline
+{\ttfamily \#include $<$Wire.\+h$>$}\newline
+{\ttfamily \#include $<$Liquid\+Crystal\+\_\+\+I2\+C.\+h$>$}\newline
+\doxysubsubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8cpp_a1e2aa09f7ee8bc83ebe7d86f72830ae9}\label{main_8cpp_a1e2aa09f7ee8bc83ebe7d86f72830ae9} 
+\#define {\bfseries LEDPIN1}~8
+\item 
+\Hypertarget{main_8cpp_a6dc0f80f651df9da7de1d45abd157c1c}\label{main_8cpp_a6dc0f80f651df9da7de1d45abd157c1c} 
+\#define {\bfseries LEDPIN2}~9
+\item 
+\Hypertarget{main_8cpp_a6926c378c55a81bd215e10ebacb50f67}\label{main_8cpp_a6926c378c55a81bd215e10ebacb50f67} 
+\#define {\bfseries LEDPIN3}~10
+\item 
+\Hypertarget{main_8cpp_a9169aa26fda6e6bba53298ad79a95228}\label{main_8cpp_a9169aa26fda6e6bba53298ad79a95228} 
+\#define {\bfseries LEDPIN4}~11
+\item 
+\Hypertarget{main_8cpp_a157d5727e709d568ac4a9d8bb3c17b09}\label{main_8cpp_a157d5727e709d568ac4a9d8bb3c17b09} 
+\#define {\bfseries LEDPIN5}~12
+\item 
+\Hypertarget{main_8cpp_a647f447b3a46494d638055d14d81a137}\label{main_8cpp_a647f447b3a46494d638055d14d81a137} 
+\#define {\bfseries BUTTONPIN}~13
+\item 
+\Hypertarget{main_8cpp_ac6f18a9e1d00b4637522b1b469a92021}\label{main_8cpp_ac6f18a9e1d00b4637522b1b469a92021} 
+\#define {\bfseries ROW}~0
+\item 
+\Hypertarget{main_8cpp_a1f55eb6587481328c753a5c438275a3e}\label{main_8cpp_a1f55eb6587481328c753a5c438275a3e} 
+\#define {\bfseries COLUMN}~0
+\item 
+\Hypertarget{main_8cpp_a03c8dbc3a86058a22d4885d309ccbd55}\label{main_8cpp_a03c8dbc3a86058a22d4885d309ccbd55} 
+\#define {\bfseries FIVESECONDS}~5000
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{main_8cpp_a8f8ec8cb9c56e54a561cda8842bcf653}{blink\+\_\+pattern}} (int \texorpdfstring{$\ast$}{*}prev)
+\begin{DoxyCompactList}\small\item\em Blinks the LED\textquotesingle{}s from left to right. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_abd8a02f52d5ab37c5369859eff6978f4}\label{main_8cpp_abd8a02f52d5ab37c5369859eff6978f4} 
+void {\bfseries blink\+\_\+point\+Pattern} ()
+\begin{DoxyCompactList}\small\item\em Lights the LED\textquotesingle{}s in a pattern, when a point is scored. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_ac63a57ef115d0db2ae2976cada6a9cbb}{blink\+\_\+random}} (int \texorpdfstring{$\ast$}{*}prev)
+\begin{DoxyCompactList}\small\item\em Blinks in a random pattern. The same LED cannot be chonen twice. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_a56485776eae912a719b64e5e6951335d}\label{main_8cpp_a56485776eae912a719b64e5e6951335d} 
+void {\bfseries LEDoff} ()
+\begin{DoxyCompactList}\small\item\em Turns off all 5 LED\textquotesingle{}s. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a35a8168eb1a2fb9acaeb1ad70a96a9c7}{set\+LED}} (int led)
+\begin{DoxyCompactList}\small\item\em Used to light up the correct LED. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_ae38e43473127d66ca2b97768cd5ae238}{click\+\_\+detected}} (int \texorpdfstring{$\ast$}{*}prev, int \texorpdfstring{$\ast$}{*}points, int \texorpdfstring{$\ast$}{*}misses)
+\begin{DoxyCompactList}\small\item\em If a click is detected, a check will be run to verify if the 3rd LED was lit at the moment. If the 3rd LED was lit, a point is added and the blink\+\_\+pattern\+Points(), wil animate a point scored. If the 3rd LED was not lit, the misses counter will be incremented, and the LED\textquotesingle{}s will turn off for 1 second. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_aa040fba373471ee7c65ce690035ddf2d}{win}} (int \texorpdfstring{$\ast$}{*}cycle, int \texorpdfstring{$\ast$}{*}prev, int \texorpdfstring{$\ast$}{*}points, int \texorpdfstring{$\ast$}{*}misses)
+\begin{DoxyCompactList}\small\item\em Winning message displayed then the points scored and total misses are displayed. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_a4803a680f4d726f8c629d67e7328c4bd}\label{main_8cpp_a4803a680f4d726f8c629d67e7328c4bd} 
+void {\bfseries easy\+Clear} ()
+\begin{DoxyCompactList}\small\item\em Clears everything currently displayed 16 x 2 (by printing spaces) \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{main_8cpp_a81f75846809e0bedf8eb2c751c9e3dbd}{print\+Points\+And\+Misses}} (int points, int misses)
+\begin{DoxyCompactList}\small\item\em Prints the current points and misses. \end{DoxyCompactList}\item 
+\Hypertarget{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d}\label{main_8cpp_a4fc01d736fe50cf5b977f755b675f11d} 
+void {\bfseries setup} ()
+\item 
+\Hypertarget{main_8cpp_afe461d27b9c48d5921c00d521181f12f}\label{main_8cpp_afe461d27b9c48d5921c00d521181f12f} 
+void {\bfseries loop} ()
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{main_8cpp_aaa6c8f573103e6b7695e0bc2ada01184}\label{main_8cpp_aaa6c8f573103e6b7695e0bc2ada01184} 
+\mbox{\hyperlink{class_liquid_crystal___i2_c}{Liquid\+Crystal\+\_\+\+I2C}} {\bfseries lcd} (0x27, 20, 4)
+\item 
+\Hypertarget{main_8cpp_a1f4871d45089b039d95d3832dd123827}\label{main_8cpp_a1f4871d45089b039d95d3832dd123827} 
+int {\bfseries cycle} = 0
+\item 
+\Hypertarget{main_8cpp_a034b3633bcf9859f3fb6b7ab7a334f6e}\label{main_8cpp_a034b3633bcf9859f3fb6b7ab7a334f6e} 
+int {\bfseries prev} = 1
+\item 
+\Hypertarget{main_8cpp_af7f8f4a4e39e09fdb5e9f02330ecabef}\label{main_8cpp_af7f8f4a4e39e09fdb5e9f02330ecabef} 
+int {\bfseries points} = 0
+\item 
+\Hypertarget{main_8cpp_acb6b7e41e677928ff3ee0f9930319eee}\label{main_8cpp_acb6b7e41e677928ff3ee0f9930319eee} 
+int {\bfseries misses} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+your name (\href{mailto:you@domain.com}{\texttt{ you@domain.\+com}}) 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2025-\/01-\/10
+\end{DoxyDate}
+\begin{DoxyCopyright}{Copyright}
+Copyright (c) 2025 
+\end{DoxyCopyright}
+
+
+\doxysubsection{Function Documentation}
+\Hypertarget{main_8cpp_a8f8ec8cb9c56e54a561cda8842bcf653}\index{main.cpp@{main.cpp}!blink\_pattern@{blink\_pattern}}
+\index{blink\_pattern@{blink\_pattern}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{blink\_pattern()}{blink\_pattern()}}
+{\footnotesize\ttfamily \label{main_8cpp_a8f8ec8cb9c56e54a561cda8842bcf653} 
+void blink\+\_\+pattern (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{prev}{}\end{DoxyParamCaption})}
+
+
+
+Blinks the LED\textquotesingle{}s from left to right. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prev} & Stores the previously lit LED \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8cpp_ac63a57ef115d0db2ae2976cada6a9cbb}\index{main.cpp@{main.cpp}!blink\_random@{blink\_random}}
+\index{blink\_random@{blink\_random}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{blink\_random()}{blink\_random()}}
+{\footnotesize\ttfamily \label{main_8cpp_ac63a57ef115d0db2ae2976cada6a9cbb} 
+void blink\+\_\+random (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{prev}{}\end{DoxyParamCaption})}
+
+
+
+Blinks in a random pattern. The same LED cannot be chonen twice. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prev} & Previously lit LED \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8cpp_ae38e43473127d66ca2b97768cd5ae238}\index{main.cpp@{main.cpp}!click\_detected@{click\_detected}}
+\index{click\_detected@{click\_detected}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{click\_detected()}{click\_detected()}}
+{\footnotesize\ttfamily \label{main_8cpp_ae38e43473127d66ca2b97768cd5ae238} 
+void click\+\_\+detected (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{prev}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{points}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{misses}{}\end{DoxyParamCaption})}
+
+
+
+If a click is detected, a check will be run to verify if the 3rd LED was lit at the moment. If the 3rd LED was lit, a point is added and the blink\+\_\+pattern\+Points(), wil animate a point scored. If the 3rd LED was not lit, the misses counter will be incremented, and the LED\textquotesingle{}s will turn off for 1 second. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em prev} & Previously lit LED (which here is the current one) \\
+\hline
+{\em points} & Point counter \\
+\hline
+{\em misses} & Misses counter \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8cpp_a81f75846809e0bedf8eb2c751c9e3dbd}\index{main.cpp@{main.cpp}!printPointsAndMisses@{printPointsAndMisses}}
+\index{printPointsAndMisses@{printPointsAndMisses}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{printPointsAndMisses()}{printPointsAndMisses()}}
+{\footnotesize\ttfamily \label{main_8cpp_a81f75846809e0bedf8eb2c751c9e3dbd} 
+void print\+Points\+And\+Misses (\begin{DoxyParamCaption}\item[{int}]{points}{, }\item[{int}]{misses}{}\end{DoxyParamCaption})}
+
+
+
+Prints the current points and misses. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em points} & Points Scored \\
+\hline
+{\em misses} & Misses "{}\+Scored"{} \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8cpp_a35a8168eb1a2fb9acaeb1ad70a96a9c7}\index{main.cpp@{main.cpp}!setLED@{setLED}}
+\index{setLED@{setLED}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{setLED()}{setLED()}}
+{\footnotesize\ttfamily \label{main_8cpp_a35a8168eb1a2fb9acaeb1ad70a96a9c7} 
+void set\+LED (\begin{DoxyParamCaption}\item[{int}]{led}{}\end{DoxyParamCaption})}
+
+
+
+Used to light up the correct LED. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em led} & LED to be lit up \\
+\hline
+\end{DoxyParams}
+\Hypertarget{main_8cpp_aa040fba373471ee7c65ce690035ddf2d}\index{main.cpp@{main.cpp}!win@{win}}
+\index{win@{win}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{win()}{win()}}
+{\footnotesize\ttfamily \label{main_8cpp_aa040fba373471ee7c65ce690035ddf2d} 
+void win (\begin{DoxyParamCaption}\item[{int \texorpdfstring{$\ast$}{*}}]{cycle}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{prev}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{points}{, }\item[{int \texorpdfstring{$\ast$}{*}}]{misses}{}\end{DoxyParamCaption})}
+
+
+
+Winning message displayed then the points scored and total misses are displayed. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em cycle} & Amount of time the loop function has lopped (resets at 10) \\
+\hline
+{\em prev} & Previously lit LED \\
+\hline
+{\em points} & Total Points \\
+\hline
+{\em misses} & Total Misses \\
+\hline
+\end{DoxyParams}

@@ -1,0 +1,135 @@
+\doxysection{Liquid\+Crystal\+\_\+\+I2\+C.\+h}
+\hypertarget{_liquid_crystal___i2_c_8h_source}{}\label{_liquid_crystal___i2_c_8h_source}\index{C:/Users/olive/Dropbox/CatchTheLED/lib/LiquidCrystal\_I2C-\/master/LiquidCrystal\_I2C.h@{C:/Users/olive/Dropbox/CatchTheLED/lib/LiquidCrystal\_I2C-\/master/LiquidCrystal\_I2C.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{comment}{//YWROBOT}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#ifndef\ LiquidCrystal\_I2C\_h}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#define\ LiquidCrystal\_I2C\_h}}
+\DoxyCodeLine{00004\ }
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <inttypes.h>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ "{}Print.h"{}}\ }
+\DoxyCodeLine{00007\ \textcolor{preprocessor}{\#include\ <Wire.h>}}
+\DoxyCodeLine{00008\ }
+\DoxyCodeLine{00009\ \textcolor{comment}{//\ commands}}
+\DoxyCodeLine{00010\ \textcolor{preprocessor}{\#define\ LCD\_CLEARDISPLAY\ 0x01}}
+\DoxyCodeLine{00011\ \textcolor{preprocessor}{\#define\ LCD\_RETURNHOME\ 0x02}}
+\DoxyCodeLine{00012\ \textcolor{preprocessor}{\#define\ LCD\_ENTRYMODESET\ 0x04}}
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#define\ LCD\_DISPLAYCONTROL\ 0x08}}
+\DoxyCodeLine{00014\ \textcolor{preprocessor}{\#define\ LCD\_CURSORSHIFT\ 0x10}}
+\DoxyCodeLine{00015\ \textcolor{preprocessor}{\#define\ LCD\_FUNCTIONSET\ 0x20}}
+\DoxyCodeLine{00016\ \textcolor{preprocessor}{\#define\ LCD\_SETCGRAMADDR\ 0x40}}
+\DoxyCodeLine{00017\ \textcolor{preprocessor}{\#define\ LCD\_SETDDRAMADDR\ 0x80}}
+\DoxyCodeLine{00018\ }
+\DoxyCodeLine{00019\ \textcolor{comment}{//\ flags\ for\ display\ entry\ mode}}
+\DoxyCodeLine{00020\ \textcolor{preprocessor}{\#define\ LCD\_ENTRYRIGHT\ 0x00}}
+\DoxyCodeLine{00021\ \textcolor{preprocessor}{\#define\ LCD\_ENTRYLEFT\ 0x02}}
+\DoxyCodeLine{00022\ \textcolor{preprocessor}{\#define\ LCD\_ENTRYSHIFTINCREMENT\ 0x01}}
+\DoxyCodeLine{00023\ \textcolor{preprocessor}{\#define\ LCD\_ENTRYSHIFTDECREMENT\ 0x00}}
+\DoxyCodeLine{00024\ }
+\DoxyCodeLine{00025\ \textcolor{comment}{//\ flags\ for\ display\ on/off\ control}}
+\DoxyCodeLine{00026\ \textcolor{preprocessor}{\#define\ LCD\_DISPLAYON\ 0x04}}
+\DoxyCodeLine{00027\ \textcolor{preprocessor}{\#define\ LCD\_DISPLAYOFF\ 0x00}}
+\DoxyCodeLine{00028\ \textcolor{preprocessor}{\#define\ LCD\_CURSORON\ 0x02}}
+\DoxyCodeLine{00029\ \textcolor{preprocessor}{\#define\ LCD\_CURSOROFF\ 0x00}}
+\DoxyCodeLine{00030\ \textcolor{preprocessor}{\#define\ LCD\_BLINKON\ 0x01}}
+\DoxyCodeLine{00031\ \textcolor{preprocessor}{\#define\ LCD\_BLINKOFF\ 0x00}}
+\DoxyCodeLine{00032\ }
+\DoxyCodeLine{00033\ \textcolor{comment}{//\ flags\ for\ display/cursor\ shift}}
+\DoxyCodeLine{00034\ \textcolor{preprocessor}{\#define\ LCD\_DISPLAYMOVE\ 0x08}}
+\DoxyCodeLine{00035\ \textcolor{preprocessor}{\#define\ LCD\_CURSORMOVE\ 0x00}}
+\DoxyCodeLine{00036\ \textcolor{preprocessor}{\#define\ LCD\_MOVERIGHT\ 0x04}}
+\DoxyCodeLine{00037\ \textcolor{preprocessor}{\#define\ LCD\_MOVELEFT\ 0x00}}
+\DoxyCodeLine{00038\ }
+\DoxyCodeLine{00039\ \textcolor{comment}{//\ flags\ for\ function\ set}}
+\DoxyCodeLine{00040\ \textcolor{preprocessor}{\#define\ LCD\_8BITMODE\ 0x10}}
+\DoxyCodeLine{00041\ \textcolor{preprocessor}{\#define\ LCD\_4BITMODE\ 0x00}}
+\DoxyCodeLine{00042\ \textcolor{preprocessor}{\#define\ LCD\_2LINE\ 0x08}}
+\DoxyCodeLine{00043\ \textcolor{preprocessor}{\#define\ LCD\_1LINE\ 0x00}}
+\DoxyCodeLine{00044\ \textcolor{preprocessor}{\#define\ LCD\_5x10DOTS\ 0x04}}
+\DoxyCodeLine{00045\ \textcolor{preprocessor}{\#define\ LCD\_5x8DOTS\ 0x00}}
+\DoxyCodeLine{00046\ }
+\DoxyCodeLine{00047\ \textcolor{comment}{//\ flags\ for\ backlight\ control}}
+\DoxyCodeLine{00048\ \textcolor{preprocessor}{\#define\ LCD\_BACKLIGHT\ 0x08}}
+\DoxyCodeLine{00049\ \textcolor{preprocessor}{\#define\ LCD\_NOBACKLIGHT\ 0x00}}
+\DoxyCodeLine{00050\ }
+\DoxyCodeLine{00051\ \textcolor{preprocessor}{\#define\ En\ B00000100\ \ }\textcolor{comment}{//\ Enable\ bit}}
+\DoxyCodeLine{00052\ \textcolor{preprocessor}{\#define\ Rw\ B00000010\ \ }\textcolor{comment}{//\ Read/Write\ bit}}
+\DoxyCodeLine{00053\ \textcolor{preprocessor}{\#define\ Rs\ B00000001\ \ }\textcolor{comment}{//\ Register\ select\ bit}}
+\DoxyCodeLine{00054\ }
+\DoxyCodeLine{00055\ \textcolor{keyword}{class\ }LiquidCrystal\_I2C\ :\ \textcolor{keyword}{public}\ Print\ \{}
+\DoxyCodeLine{00056\ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00057\ \ \ LiquidCrystal\_I2C(uint8\_t\ lcd\_Addr,uint8\_t\ lcd\_cols,uint8\_t\ lcd\_rows);}
+\DoxyCodeLine{00058\ \ \ \textcolor{keywordtype}{void}\ begin(uint8\_t\ cols,\ uint8\_t\ rows,\ uint8\_t\ charsize\ =\ LCD\_5x8DOTS\ );}
+\DoxyCodeLine{00059\ \ \ \textcolor{keywordtype}{void}\ clear();}
+\DoxyCodeLine{00060\ \ \ \textcolor{keywordtype}{void}\ home();}
+\DoxyCodeLine{00061\ \ \ \textcolor{keywordtype}{void}\ noDisplay();}
+\DoxyCodeLine{00062\ \ \ \textcolor{keywordtype}{void}\ display();}
+\DoxyCodeLine{00063\ \ \ \textcolor{keywordtype}{void}\ noBlink();}
+\DoxyCodeLine{00064\ \ \ \textcolor{keywordtype}{void}\ blink();}
+\DoxyCodeLine{00065\ \ \ \textcolor{keywordtype}{void}\ noCursor();}
+\DoxyCodeLine{00066\ \ \ \textcolor{keywordtype}{void}\ cursor();}
+\DoxyCodeLine{00067\ \ \ \textcolor{keywordtype}{void}\ scrollDisplayLeft();}
+\DoxyCodeLine{00068\ \ \ \textcolor{keywordtype}{void}\ scrollDisplayRight();}
+\DoxyCodeLine{00069\ \ \ \textcolor{keywordtype}{void}\ printLeft();}
+\DoxyCodeLine{00070\ \ \ \textcolor{keywordtype}{void}\ printRight();}
+\DoxyCodeLine{00071\ \ \ \textcolor{keywordtype}{void}\ leftToRight();}
+\DoxyCodeLine{00072\ \ \ \textcolor{keywordtype}{void}\ rightToLeft();}
+\DoxyCodeLine{00073\ \ \ \textcolor{keywordtype}{void}\ shiftIncrement();}
+\DoxyCodeLine{00074\ \ \ \textcolor{keywordtype}{void}\ shiftDecrement();}
+\DoxyCodeLine{00075\ \ \ \textcolor{keywordtype}{void}\ noBacklight();}
+\DoxyCodeLine{00076\ \ \ \textcolor{keywordtype}{void}\ backlight();}
+\DoxyCodeLine{00077\ \ \ \textcolor{keywordtype}{void}\ autoscroll();}
+\DoxyCodeLine{00078\ \ \ \textcolor{keywordtype}{void}\ noAutoscroll();\ }
+\DoxyCodeLine{00079\ \ \ \textcolor{keywordtype}{void}\ createChar(uint8\_t,\ uint8\_t[]);}
+\DoxyCodeLine{00080\ \ \ \textcolor{keywordtype}{void}\ createChar(uint8\_t\ location,\ \textcolor{keyword}{const}\ \textcolor{keywordtype}{char}\ *charmap);}
+\DoxyCodeLine{00081\ \ \ \textcolor{comment}{//\ Example:\ \ \ const\ char\ bell[8]\ PROGMEM\ =\ \{B00100,B01110,B01110,B01110,B11111,B00000,B00100,B00000\};}}
+\DoxyCodeLine{00082\ \ \ }
+\DoxyCodeLine{00083\ \ \ \textcolor{keywordtype}{void}\ setCursor(uint8\_t,\ uint8\_t);\ }
+\DoxyCodeLine{00084\ \textcolor{preprocessor}{\#if\ defined(ARDUINO)\ \&\&\ ARDUINO\ >=\ 100}}
+\DoxyCodeLine{00085\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{size\_t}\ write(uint8\_t);}
+\DoxyCodeLine{00086\ \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{00087\ \ \ \textcolor{keyword}{virtual}\ \textcolor{keywordtype}{void}\ write(uint8\_t);}
+\DoxyCodeLine{00088\ \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{00089\ \ \ \textcolor{keywordtype}{void}\ command(uint8\_t);}
+\DoxyCodeLine{00090\ \ \ \textcolor{keywordtype}{void}\ init();}
+\DoxyCodeLine{00091\ \ \ \textcolor{keywordtype}{void}\ oled\_init();}
+\DoxyCodeLine{00092\ }
+\DoxyCodeLine{00094\ \textcolor{keywordtype}{void}\ blink\_on();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ alias\ for\ blink()}}
+\DoxyCodeLine{00095\ \textcolor{keywordtype}{void}\ blink\_off();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ alias\ for\ noBlink()}}
+\DoxyCodeLine{00096\ \textcolor{keywordtype}{void}\ cursor\_on();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ alias\ for\ cursor()}}
+\DoxyCodeLine{00097\ \textcolor{keywordtype}{void}\ cursor\_off();\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ alias\ for\ noCursor()}}
+\DoxyCodeLine{00098\ \textcolor{keywordtype}{void}\ setBacklight(uint8\_t\ new\_val);\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{comment}{//\ alias\ for\ backlight()\ and\ nobacklight()}}
+\DoxyCodeLine{00099\ \textcolor{keywordtype}{void}\ load\_custom\_character(uint8\_t\ char\_num,\ uint8\_t\ *rows);\ \ \ \ \textcolor{comment}{//\ alias\ for\ createChar()}}
+\DoxyCodeLine{00100\ \textcolor{keywordtype}{void}\ printstr(\textcolor{keyword}{const}\ \textcolor{keywordtype}{char}[]);}
+\DoxyCodeLine{00101\ }
+\DoxyCodeLine{00103\ uint8\_t\ status();}
+\DoxyCodeLine{00104\ \textcolor{keywordtype}{void}\ setContrast(uint8\_t\ new\_val);}
+\DoxyCodeLine{00105\ uint8\_t\ keypad();}
+\DoxyCodeLine{00106\ \textcolor{keywordtype}{void}\ setDelay(\textcolor{keywordtype}{int},\textcolor{keywordtype}{int});}
+\DoxyCodeLine{00107\ \textcolor{keywordtype}{void}\ on();}
+\DoxyCodeLine{00108\ \textcolor{keywordtype}{void}\ off();}
+\DoxyCodeLine{00109\ uint8\_t\ init\_bargraph(uint8\_t\ graphtype);}
+\DoxyCodeLine{00110\ \textcolor{keywordtype}{void}\ draw\_horizontal\_graph(uint8\_t\ row,\ uint8\_t\ column,\ uint8\_t\ len,\ \ uint8\_t\ pixel\_col\_end);}
+\DoxyCodeLine{00111\ \textcolor{keywordtype}{void}\ draw\_vertical\_graph(uint8\_t\ row,\ uint8\_t\ column,\ uint8\_t\ len,\ \ uint8\_t\ pixel\_col\_end);}
+\DoxyCodeLine{00112\ \ \ \ \ \ }
+\DoxyCodeLine{00113\ }
+\DoxyCodeLine{00114\ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00115\ \ \ \textcolor{keywordtype}{void}\ init\_priv();}
+\DoxyCodeLine{00116\ \ \ \textcolor{keywordtype}{void}\ send(uint8\_t,\ uint8\_t);}
+\DoxyCodeLine{00117\ \ \ \textcolor{keywordtype}{void}\ write4bits(uint8\_t);}
+\DoxyCodeLine{00118\ \ \ \textcolor{keywordtype}{void}\ expanderWrite(uint8\_t);}
+\DoxyCodeLine{00119\ \ \ \textcolor{keywordtype}{void}\ pulseEnable(uint8\_t);}
+\DoxyCodeLine{00120\ \ \ uint8\_t\ \_Addr;}
+\DoxyCodeLine{00121\ \ \ uint8\_t\ \_displayfunction;}
+\DoxyCodeLine{00122\ \ \ uint8\_t\ \_displaycontrol;}
+\DoxyCodeLine{00123\ \ \ uint8\_t\ \_displaymode;}
+\DoxyCodeLine{00124\ \ \ uint8\_t\ \_numlines;}
+\DoxyCodeLine{00125\ \ \ \textcolor{keywordtype}{bool}\ \_oled\ =\ \textcolor{keyword}{false};}
+\DoxyCodeLine{00126\ \ \ uint8\_t\ \_cols;}
+\DoxyCodeLine{00127\ \ \ uint8\_t\ \_rows;}
+\DoxyCodeLine{00128\ \ \ uint8\_t\ \_backlightval;}
+\DoxyCodeLine{00129\ \};}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}
